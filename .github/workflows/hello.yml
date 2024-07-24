@@ -1,34 +1,33 @@
-name: Hello World and Lint Workflow
+name: CI Workflow
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  hello_world_job:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Print Hello World
-      run: echo 'Hello World!'
-
-    - name: Print the date
-      run: date
-
-    - name: List directory contents
-      run: ls -l
-
   simple_deployment_pipeline:
     runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
       with:
         node-version: '20'
-    - name: Install dependencies 
-      run: npm install  
 
-    - name: Check style
+    - name: Install dependencies
+      run: npm install
+
+    - name: Lint code
       run: npm run eslint -- --fix
+
+    - name: Build project
+      run: npm run build
+
+    - name: Run tests
+      run: npm test
