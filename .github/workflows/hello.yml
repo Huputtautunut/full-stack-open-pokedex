@@ -1,4 +1,4 @@
-name: Hello World Workflow
+name: Hello World and Lint Workflow
 
 on:
   push:
@@ -18,3 +18,17 @@ jobs:
 
     - name: List directory contents
       run: ls -l
+
+  simple_deployment_pipeline:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - name: Install dependencies 
+      run: npm install  
+
+    - name: Check style
+      run: npm run eslint
