@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Print Hello World
-      run: echo "Hello World!"
+      run: echo 'Hello World!'
 
     - name: Print the date
       run: date
@@ -31,4 +31,4 @@ jobs:
       run: npm install  
 
     - name: Check style
-      run: npm run eslint
+      run: npm run eslint -- --fix
