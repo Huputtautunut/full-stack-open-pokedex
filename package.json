@@ -56,6 +56,11 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1"
   },
+
+  "devDependencies": {
+    "webpack-cli": "^4.7.2"
+  },
+  
   "jest": {
     "testEnvironment": "jsdom"
   }
