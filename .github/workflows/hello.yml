@@ -38,3 +38,7 @@ jobs:
         command: npm run test:e2e
         start: npm run start-prod
         wait-on: http://localhost:8080/
+
+    - name: Render Deployment
+      uses: sws2apps/render-deployment@v1.7.0
+    
