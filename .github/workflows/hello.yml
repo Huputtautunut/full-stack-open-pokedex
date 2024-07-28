@@ -42,6 +42,6 @@ jobs:
     - name: Render Deployment
       uses: sws2apps/render-deployment@v1.7.0
       with:
-        api_key: ${{ secrets.FULLSTACK24 }}  
-        service_id: ${{ secrets.SERVICE_ID_RENDER }}
+        apiKey: ${{ secrets.FULLSTACK24 }}  
+        serviceId: ${{ secrets.SERVICE_ID_RENDER }}
     
