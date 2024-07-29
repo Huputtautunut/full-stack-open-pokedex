@@ -65,3 +65,22 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
+
+    - name: Notify Discord on success
+      if: github.ref == 'refs/heads/main' && steps.check_commit_message.outputs.skip != 'true'
+      uses: rjstone/discord-webhook-notify@v1.0.4
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        message: "✅ New version deployed successfully!"
+
+    - name: Notify Discord on failure
+      if: failure()
+      uses: rjstone/discord-webhook-notify@v1.0.4
+      with:
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        message: |
+          ❌ Build failed!
+          Commit: ${{ github.event.head_commit.message }}
+          Author: ${{ github.event.head_commit.author.name }}
+          URL: ${{ github.event.head_commit.url }}
+      
