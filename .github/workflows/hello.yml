@@ -39,15 +39,28 @@ jobs:
         start: npm run start-prod
         wait-on: http://localhost:8080/
 
+    - name: Check commit messages
+      id: check_commit_message
+      run: |
+        echo "Checking commit messages for #skip..."
+        SKIP=false
+        for commit_message in $(git log --format=%B --no-merges ${{ github.sha }}~1..${{ github.sha }}); do
+          if [[ "$commit_message" == *"#skip"* ]]; then
+            SKIP=true
+            break
+           fi
+        done
+        echo "::set-output name=skip::$SKIP"
+  
     - name: Render Deployment
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main' && steps.check_commit_message.outputs.skip != 'true'
       uses: sws2apps/render-deployment@v1.7.0
       with:
         apiKey: ${{ secrets.FULLSTACK24 }}  
         serviceId: ${{ secrets.SERVICE_ID_RENDER }}
-    
+      
     - name: Bump version and push tag
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main' && steps.check_commit_message.outputs.skip != 'true'
       uses: anothrNick/github-tag-action@1.64.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
