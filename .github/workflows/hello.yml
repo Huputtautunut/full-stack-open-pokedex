@@ -83,4 +83,16 @@ jobs:
           Commit: ${{ github.event.head_commit.message }}
           Author: ${{ github.event.head_commit.author.name }}
           URL: ${{ github.event.head_commit.url }}
+
+  health_check:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check the deployed service URL
+      uses: jtalk/url-health-check-action@v4
+      with:
+        url: https://full-stack-open-pokedex-02pf.onrender.com
+        follow-redirect: false
+        max-attempts: 3
+        retry-delay: 5s
+        retry-all: false
       
